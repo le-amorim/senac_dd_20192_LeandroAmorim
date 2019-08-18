@@ -4,7 +4,7 @@ public class FuncionarioOperacional extends Empregados {
 	
 	private int Id;
 	private String nome;
-	private Gerente gerente;
+	private int Idgerente;
 	private double  salarioLiquido;
 	private double salarioBase;
 	
@@ -15,18 +15,15 @@ public class FuncionarioOperacional extends Empregados {
 
 
 	public FuncionarioOperacional(String nome, String cpf, String sexo, int idade, double salarioBruto,
-			double impostoRenda, double contribuicao, int id, String nome2, Gerente gerente, double salarioLiquido,
+			double impostoRenda, double contribuicao, int id, String nome2, int idgerente, double salarioLiquido,
 			double salarioBase) {
 		super(nome, cpf, sexo, idade, salarioBruto, impostoRenda, contribuicao);
 		Id = id;
 		nome = nome2;
-		this.gerente = gerente;
+		Idgerente = idgerente;
 		this.salarioLiquido = salarioLiquido;
 		this.salarioBase = salarioBase;
 	}
-
-
-
 
 
 	public String getNome() {
@@ -37,14 +34,15 @@ public class FuncionarioOperacional extends Empregados {
 		this.nome = nome;
 	}
 
-	public Gerente getGerente() {
-		return gerente;
+
+	public int getIdgerente() {
+		return Idgerente;
 	}
 
-	public void setGerente(Gerente gerente) {
-		this.gerente = gerente;
-	}
 
+	public void setIdgerente(int idgerente) {
+		Idgerente = idgerente;
+	}
 
 
 	public int getId() {

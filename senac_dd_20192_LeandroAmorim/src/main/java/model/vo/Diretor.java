@@ -9,13 +9,10 @@ public class Diretor extends Empregados {
 	private double  salarioLiquido;	
 	private double salarioBase;
 	private double comissao;
+
 	public Diretor() {
 		super();
 	}
-
-	
-
-
 
 	public Diretor(String nome, String cpf, String sexo, int idade, double salarioBruto, double impostoRenda,
 			double contribuicao, int idDiretor, String nome2, ArrayList<Gerente> gerentes, double salarioLiquido,
@@ -28,10 +25,6 @@ public class Diretor extends Empregados {
 		this.salarioBase = salarioBase;
 		this.comissao = comissao;
 	}
-
-
-
-
 
 	public String getNome() {
 		return nome;

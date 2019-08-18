@@ -10,11 +10,6 @@ public class Gerente extends Empregados {
 	private double salarioBase;
 	private double comissao;
 	
-
-	
-
-
-
 	public Gerente(String nome, String cpf, String sexo, int idade, double salarioBruto, double impostoRenda,
 			double contribuicao, int idGerente, String nome2, ArrayList<FuncionarioOperacional> funcionarios,
 			double salarioLiquido, double salarioBase, double comissao) {
