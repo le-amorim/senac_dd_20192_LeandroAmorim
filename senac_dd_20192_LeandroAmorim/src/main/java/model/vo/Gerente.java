@@ -1,80 +1,31 @@
 package model.vo;
 
-import java.util.ArrayList;
-
 public class Gerente extends Empregados {
 	private int IdGerente;
-	private String nome;
-	private ArrayList<FuncionarioOperacional> funcionarios;
-	private double  salarioLiquido;
-	private double salarioBase;
 	private double comissao;
-	
-	public Gerente(String nome, String cpf, String sexo, int idade, double salarioBruto, double impostoRenda,
-			double contribuicao, int idGerente, String nome2, ArrayList<FuncionarioOperacional> funcionarios,
-			double salarioLiquido, double salarioBase, double comissao) {
-		super(nome, cpf, sexo, idade, salarioBruto, impostoRenda, contribuicao);
-		IdGerente = idGerente;
-		nome = nome2;
-		this.funcionarios = funcionarios;
-		this.salarioLiquido = salarioLiquido;
-		this.salarioBase = salarioBase;
-		this.comissao = comissao;
-	}
+	 private double salarioBase;
+	 private double salarioLiquido;
 
+
+	
+
+
+	public Gerente(int idEmpregado, String nome, String cpf, String sexo, int idade, double salarioBruto,
+			double comissao, int tipo, int idGerente, double comissao2, double salarioBase, double salarioLiquido) {
+		super(idEmpregado, nome, cpf, sexo, idade, salarioBruto, comissao, tipo);
+		IdGerente = idGerente;
+		comissao = comissao2;
+		this.salarioBase = salarioBase;
+		this.salarioLiquido = salarioLiquido;
+	}
 
 
 	public Gerente() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public ArrayList<FuncionarioOperacional> getFuncionarios() {
-		return funcionarios;
-	}
-
-	public void setFuncionarios(ArrayList<FuncionarioOperacional> funcionarios) {
-		this.funcionarios = funcionarios;
-	}
-
-	public int getIdGerente() {
-		return IdGerente;
-	}
-
-	public void setIdGerente(int idGerente) {
-		IdGerente = idGerente;
-	}
-
-	public double getSalarioLiquido() {
-		return salarioLiquido;
-	}
-
-	public void setSalarioLiquido(double salarioLiquido) {
-		this.salarioLiquido = salarioLiquido;
-	}
-	
-	
-	
-	public double getSalarioBase() {
-		return salarioBase;
-	}
-
-
-
-	public void setSalarioBase(double salarioBase) {
-		this.salarioBase = salarioBase;
-	}
-
+		
 	public double getComissao() {
 		return comissao;
 	}
@@ -86,10 +37,42 @@ public class Gerente extends Empregados {
 	}
 
 
-	public double CalcularSalarioLiquido() {
-		salarioLiquido = salarioBase * 0.90 + comissao;
+	public int getIdGerente() {
+		return IdGerente;
+	}
+
+
+
+	public void setIdGerente(int idGerente) {
+		IdGerente = idGerente;
+	}
+
+	
+
+	public double getSalarioBase() {
+		return salarioBase;
+	}
+
+
+	public double getSalarioLiquido() {
+		return salarioLiquido;
+	}
+
+
+	@Override
+	public double calcularSalarioLiquido() {
+		salarioLiquido = this.getSalarioBase() * 0.90 + this.getComissao();	
 		
 		return salarioLiquido;
 	}
+
+
+	@Override
+	public double calcularSalarioBase() {
+		salarioBase = this.getSalarioBruto() - this.getContribuicao() - this.getImpostoRenda(); 
+		
+		return salarioBase;
+	}
+
 
 }

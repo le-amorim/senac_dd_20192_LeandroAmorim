@@ -1,7 +1,7 @@
 package model.vo;
 
-public class Empregados {
-
+public abstract class Empregados {
+	private int IdEmpregado;
 	private String nome;
 	private String cpf;
 	private String sexo;
@@ -9,17 +9,27 @@ public class Empregados {
 	private double salarioBruto;
 	private double impostoRenda;
 	private double contribuicao;
+	private double salarioBase;
+	private double salarioLiquido;
+	private double comissao;
+	private int tipo;
+	 
+	 
+	
+	
 
-	public Empregados(String nome, String cpf, String sexo, int idade, double salarioBruto, double impostoRenda,
-			double contribuicao) {
+
+	public Empregados(int idEmpregado, String nome, String cpf, String sexo, int idade, double salarioBruto,
+			double comissao, int tipo) {
 		super();
+		IdEmpregado = idEmpregado;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.sexo = sexo;
 		this.idade = idade;
 		this.salarioBruto = salarioBruto;
-		this.impostoRenda = impostoRenda;
-		this.contribuicao = contribuicao;
+		this.comissao = comissao;
+		this.tipo = tipo;
 	}
 
 	public Empregados() {
@@ -71,16 +81,50 @@ public class Empregados {
 		return impostoRenda;
 	}
 
-	public void setImpostoRenda(double impostoRenda) {
-		this.impostoRenda = impostoRenda;
-	}
-
 	public double getContribuicao() {
 		return contribuicao;
 	}
 
-	public void setContribuicao(double contribuicao) {
-		this.contribuicao = contribuicao;
+	
+	
+	public double getSalarioBase() {
+		return salarioBase;
+	}
+
+	public double getSalarioLiquido() {
+		return salarioLiquido;
+	}
+
+	
+	public int getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
+	
+
+	public int getIdEmpregado() {
+		return IdEmpregado;
+	}
+
+	public void setIdEmpregado(int idEmpregado) {
+		IdEmpregado = idEmpregado;
+	}
+	
+	
+
+	public double getComissao() {
+		return comissao;
+	}
+
+	
+	
+	public void setComissao(double comissao) {
+		this.comissao = comissao;
 	}
 
 	public double calculoImpostoDeRenda() {
@@ -105,5 +149,7 @@ public class Empregados {
 		return contribuicao;
 	}
 	
+	public abstract double calcularSalarioBase(); 
+	public abstract double calcularSalarioLiquido();
 	
 }

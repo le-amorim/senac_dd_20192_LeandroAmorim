@@ -14,7 +14,7 @@ public class FuncionarioOperacionalDAO implements BaseDAO<FuncionarioOperacional
 
 	public FuncionarioOperacional salvar(FuncionarioOperacional funcionarioOP) {
 		Connection conexao = Banco.getConnection();
-		String sql = "INSERT INTO FUNCIONARIO_OP (nome, cpf, sexo, idade, SALARIOBRUTO, salarioLiquido, IMPOSTORENDA, CONTRIBUICAO,IDGERENTE ) VALUES ?,?,?,?,?,?,?,?,?";
+		String sql = "INSERT INTO FUNCIONARIO_OP (nome, cpf, sexo, idade, SALARIOBRUTO, salarioLiquido, IMPOSTORENDA, CONTRIBUICAO,IDGERENTE ) VALUES (?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
 		try {
@@ -55,6 +55,7 @@ public class FuncionarioOperacionalDAO implements BaseDAO<FuncionarioOperacional
 		int resultado = 0;
 		String sql = "DELETE FROM FUNCIONARIO_OP WHERE ID= " + id;
 		try {
+
 			resultado = stmt.executeUpdate(sql);
 
 		} catch (SQLException e) {
@@ -72,7 +73,7 @@ public class FuncionarioOperacionalDAO implements BaseDAO<FuncionarioOperacional
 
 	public boolean alterar(FuncionarioOperacional funcionarioOP) {
 		Connection conexao = Banco.getConnection();
-		String sql = "UPDATE FUNCIONARIO_OP SET NOME=?, cpf=?, sexo=?, idade=?,salarioBruto=?, SALARIOLIQUIDO=?, IMPOSTORENDA=?, CONTRIBUICAO=?, IDGERENTE=? WHERE ID=?";
+		String sql = "UPDATE FUNCIONARIO_OP SET (NOME=?, cpf=?, sexo=?, idade=?,salarioBruto=?, SALARIOLIQUIDO=?, IMPOSTORENDA=?, CONTRIBUICAO=?, IDGERENTE=?) WHERE ID=?";
 		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql, PreparedStatement.RETURN_GENERATED_KEYS);
 		int quantidadeDeLinhasAfetadas = 0;
 
