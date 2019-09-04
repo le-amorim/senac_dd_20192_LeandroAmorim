@@ -2,7 +2,7 @@ package model.vo.aula5;
 
 public class Telefone {
 	private int id;
-	private int idCliente;
+	private Cliente cliente;
 	private String codigoPais;
 	private String ddd;
 	private String numero;
@@ -13,11 +13,22 @@ public class Telefone {
 		
 	}
 	
+	public Telefone(Cliente cliente, String codigoPais, String ddd, String numero, String tipoLinha,
+			boolean ativo) {
+		super();
+		this.cliente = cliente;
+		this.codigoPais = codigoPais;
+		this.ddd = ddd;
+		this.numero = numero;
+		this.tipoLinha = tipoLinha;
+		this.ativo = ativo;
+	}
+	
 	public Telefone(int id, int idCliente, String codigoPais, String ddd, String numero, String tipoLinha,
 			boolean ativo) {
 		super();
 		this.id = id;
-		this.idCliente = idCliente;
+		this.cliente = cliente;
 		this.codigoPais = codigoPais;
 		this.ddd = ddd;
 		this.numero = numero;
@@ -65,12 +76,6 @@ public class Telefone {
 		this.ativo = ativo;
 	}
 
-	@Override
-	public String toString() {
-		return " id: " + id + " |idCliente: " + idCliente + "| +" + codigoPais + "(" + ddd + ")" + numero + " - Linha: " + tipoLinha + " "
-				+ (ativo ? "Ativa" : "Inativa");
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -79,11 +84,17 @@ public class Telefone {
 		this.id = id;
 	}
 
-	public int getIdCliente() {
-		return idCliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@Override
+	public String toString() {
+		return "Telefone [id=" + id + ", cliente=" + cliente + ", codigoPais=" + codigoPais + ", ddd=" + ddd
+				+ ", numero=" + numero + ", tipoLinha=" + tipoLinha + ", ativo=" + ativo + "]";
 	}
 }

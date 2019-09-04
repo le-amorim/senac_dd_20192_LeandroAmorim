@@ -218,24 +218,21 @@ public class TelaDeCadastroClientes extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				TelefoneController telController = new TelefoneController();
 				String codigoDigitado = txtCodPais.getText();
-				String DDDDigitado = txtDDD.getText();
+				String dddDigitado = txtDDD.getText();
 				String numeroDigitado = txtNumero.getText();
 				String tipoSelecionado = cbTipo.getSelectedItem().toString();
-				int idCliente = novoCliente.getId();
-				int id = 0;
 				boolean ativo = true;
-				String mensagem = telController.validarCamposTelefone(codigoDigitado, DDDDigitado, numeroDigitado,
+				String mensagem = telController.validarCamposTelefone(codigoDigitado, dddDigitado, numeroDigitado,
 						tipoSelecionado);
 
 				if(mensagem.isEmpty()) {
-					
-					Telefone telSalvar = new Telefone( id, idCliente,codigoDigitado, DDDDigitado, numeroDigitado,tipoSelecionado, ativo);
-					telController.salvarTelefone(telSalvar);
+					Telefone novoTelefone = new Telefone(novoCliente,codigoDigitado, dddDigitado, numeroDigitado,tipoSelecionado, ativo);
+					mensagem  = telController.salvarTelefone(novoTelefone);
 					limparCampoTelefone();
+					atualizarTabelaTelefonesDoCliente();
 				}
 				
-				
-
+				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
 		btnAdicionarTelefone.setEnabled(false);
@@ -260,6 +257,13 @@ public class TelaDeCadastroClientes extends JFrame {
 		lblCadastrarCliente.setBackground(SystemColor.textHighlight);
 		lblCadastrarCliente.setBounds(0, 11, 540, 14);
 		contentPane.add(lblCadastrarCliente);
+	}
+
+	protected void atualizarTabelaTelefonesDoCliente() {
+		// consultar a lista de telefones do cliente
+		 
+		//atualizar a tabela (JTable) de telefones
+		
 	}
 
 	protected void limparCampoTelefone() {

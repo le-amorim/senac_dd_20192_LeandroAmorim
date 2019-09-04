@@ -3,6 +3,7 @@ package controller.aula05;
 import java.util.ArrayList;
 import model.dao.aula05.TelefoneDAO;
 import model.bo.aula05.TelefoneBO;
+import model.vo.aula5.Cliente;
 import model.vo.aula5.Telefone;
 
 public class TelefoneController {
@@ -12,8 +13,6 @@ public class TelefoneController {
 	public static final String SELECIONE_UM_TIPO = "<selecione um tipo>";
 
 	private TelefoneBO bo = new TelefoneBO();
-	private	TelefoneDAO dao = new TelefoneDAO();
-	
 
 	public ArrayList<Telefone> consultarTodos() {
 
@@ -26,28 +25,31 @@ public class TelefoneController {
 
 	String mensagem = " ";
 
-	public String validarCamposTelefone(String codigoDigitado, String DDDDigitado, String numeroDigitado,
+	public String validarCamposTelefone(String codigoDigitado, String dddDigitado, String numeroDigitado,
 			String tipoSelecionado) {
-		if (codigoDigitado.isEmpty() || codigoDigitado.trim().length() > 3) {
-			mensagem += " verifique o campo digitado";
+		if (codigoDigitado.isEmpty() || codigoDigitado.trim().length() > 2) {
+			mensagem += " código do Páis digitado é  inválido";
 		}
 
-		if (DDDDigitado.isEmpty() || DDDDigitado.trim().length() > 3) {
-			mensagem += " verifique o campo digitado";
+		if (dddDigitado.isEmpty() || dddDigitado.trim().length() > 2) {
+			mensagem += "DDD digitado é  inválido";
 		}
 
 		if (numeroDigitado.isEmpty() || numeroDigitado.trim().length() < 8 || numeroDigitado.trim().length() > 12) {
-			mensagem += " verifique o campo digitado";
+			mensagem += " número digitado é  inválido";
 		}
+	
+		if (tipoSelecionado.isEmpty() || tipoSelecionado == TelefoneController.TIPO_TELEFONE_MOVEL) {
+			mensagem += "selecione um tipo de telefone!";
+		}
+		
 		return mensagem;
 	}
 
-	public Telefone salvarTelefone(Telefone novoTelefone) {
-	 dao.salvar(novoTelefone);
-		
-		return novoTelefone;
+	public String salvarTelefone(Telefone novoTelefone) {
+		return bo.salvar(novoTelefone);
 	}
 
-	
-	
+
+
 }
