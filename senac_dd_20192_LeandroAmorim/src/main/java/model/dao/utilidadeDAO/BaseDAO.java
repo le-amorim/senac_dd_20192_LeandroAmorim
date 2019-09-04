@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.utilidadeDAO;
 
 
 import java.util.ArrayList;
