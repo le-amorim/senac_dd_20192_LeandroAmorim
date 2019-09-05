@@ -1,9 +1,7 @@
 package controller.aula05;
 
 import java.util.ArrayList;
-import model.dao.aula05.TelefoneDAO;
 import model.bo.aula05.TelefoneBO;
-import model.vo.aula5.Cliente;
 import model.vo.aula5.Telefone;
 
 public class TelefoneController {
@@ -35,11 +33,11 @@ public class TelefoneController {
 			mensagem += "DDD digitado é  inválido";
 		}
 
-		if (numeroDigitado.isEmpty() || numeroDigitado.trim().length() < 8 || numeroDigitado.trim().length() > 12) {
+		if (numeroDigitado.isEmpty() || numeroDigitado.trim().length() < 7 || numeroDigitado.trim().length() > 13) {
 			mensagem += " número digitado é  inválido";
 		}
 	
-		if (tipoSelecionado.isEmpty() || tipoSelecionado == TelefoneController.TIPO_TELEFONE_MOVEL) {
+		if (tipoSelecionado.isEmpty() || tipoSelecionado == TelefoneController.SELECIONE_UM_TIPO) {
 			mensagem += "selecione um tipo de telefone!";
 		}
 		

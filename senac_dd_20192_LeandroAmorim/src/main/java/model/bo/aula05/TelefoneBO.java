@@ -28,9 +28,7 @@ public class TelefoneBO {
 		
 			
 		}
-		
-	
-		
+				
 		return mensagem;
 	}
 }

@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -30,6 +30,8 @@ import model.vo.aula5.Cliente;
 import model.vo.aula5.Endereco;
 import model.vo.aula5.Telefone;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.BevelBorder;
 
 public class TelaDeCadastroClientes extends JFrame {
 
@@ -52,8 +54,11 @@ public class TelaDeCadastroClientes extends JFrame {
 	private JFormattedTextField txtCPF;
 	private Cliente novoCliente = null;
 	private JButton btnAdicionarTelefone;
+	private ArrayList<Telefone> telefonesDoNovoCliente;
 	private ArrayList<Endereco> todosOsEnderecos;
-	private String[] tipos = { TelefoneController.TIPO_TELEFONE_FIXO, TelefoneController.TIPO_TELEFONE_MOVEL, TelefoneController.SELECIONE_UM_TIPO };
+	private String[] tipos = { TelefoneController.TIPO_TELEFONE_FIXO, TelefoneController.TIPO_TELEFONE_MOVEL,
+			TelefoneController.SELECIONE_UM_TIPO };
+	private String[] colunasTabelaTelefones = { "CódPais", "DDD", "Número", "Tipo" };
 
 	/**
 	 * Launch the application.
@@ -78,7 +83,6 @@ public class TelaDeCadastroClientes extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 556, 484);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -128,6 +132,12 @@ public class TelaDeCadastroClientes extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 145, 520, 2);
 		contentPane.add(separator);
+
+		tblTelefone = new JTable();
+		tblTelefone.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tblTelefone.setBounds(20, 265, 490, 175);
+		tblTelefone.setModel(new DefaultTableModel(new Object[][] { colunasTabelaTelefones, }, colunasTabelaTelefones));
+		contentPane.add(tblTelefone);
 
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -217,6 +227,7 @@ public class TelaDeCadastroClientes extends JFrame {
 		btnAdicionarTelefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TelefoneController telController = new TelefoneController();
+
 				String codigoDigitado = txtCodPais.getText();
 				String dddDigitado = txtDDD.getText();
 				String numeroDigitado = txtNumero.getText();
@@ -225,30 +236,29 @@ public class TelaDeCadastroClientes extends JFrame {
 				String mensagem = telController.validarCamposTelefone(codigoDigitado, dddDigitado, numeroDigitado,
 						tipoSelecionado);
 
-				if(mensagem.isEmpty()) {
-					Telefone novoTelefone = new Telefone(novoCliente,codigoDigitado, dddDigitado, numeroDigitado,tipoSelecionado, ativo);
-					mensagem  = telController.salvarTelefone(novoTelefone);
-					limparCampoTelefone();
+				if (mensagem.isEmpty()) {
+					Telefone novoTelefone = new Telefone(novoCliente, codigoDigitado, dddDigitado, numeroDigitado,
+							tipoSelecionado, ativo);
+					JOptionPane.showMessageDialog(null, "Telefone adicionado com Sucesso");
+					mensagem = telController.salvarTelefone(novoTelefone);
+
+					if (mensagem.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Telefone Adicionado com Sucesso");
+						limparCampoTelefone();
+					} else {
+						JOptionPane.showMessageDialog(null, mensagem);
+					}
+
 					atualizarTabelaTelefonesDoCliente();
+				}else {
+					JOptionPane.showMessageDialog(null, mensagem);
 				}
-				
-				JOptionPane.showMessageDialog(null, mensagem);
+
 			}
 		});
 		btnAdicionarTelefone.setEnabled(false);
 		btnAdicionarTelefone.setBounds(200, 231, 142, 23);
 		contentPane.add(btnAdicionarTelefone);
-
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 269, 520, 2);
-		contentPane.add(separator_1);
-
-		tblTelefone = new JTable();
-		tblTelefone.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tblTelefone.setModel(new DefaultTableModel(new Object[][] { { "p\u00E1is", "DDD", "n\u00FAmero", "tipo" }, },
-				new String[] { "New column", "New column", "New column", "New column" }));
-		tblTelefone.setBounds(10, 279, 520, 155);
-		contentPane.add(tblTelefone);
 
 		JLabel lblCadastrarCliente = new JLabel(
 				"                                                                          Cadastrar Cliente");
@@ -261,9 +271,27 @@ public class TelaDeCadastroClientes extends JFrame {
 
 	protected void atualizarTabelaTelefonesDoCliente() {
 		// consultar a lista de telefones do cliente
-		 
-		//atualizar a tabela (JTable) de telefones
-		
+		TelefoneController telController = new TelefoneController();
+
+		if (novoCliente != null && novoCliente.getId() > 0) {
+			telefonesDoNovoCliente = telController.consultarTelefonesDoCliente(novoCliente.getId());
+		}
+		limparTabela();
+		limparCampoTelefone();
+		// atualizar a tabela (JTable) de telefones
+		DefaultTableModel model = (DefaultTableModel) tblTelefone.getModel();
+		for (Telefone telefone : telefonesDoNovoCliente) {
+			String[] novaLinha = new String[4];
+			novaLinha[0] = telefone.getCodigoPais();
+			novaLinha[1] = telefone.getDdd();
+			novaLinha[2] = telefone.getNumero();
+			novaLinha[3] = telefone.getTipoLinha();
+			model.addRow(novaLinha);
+		}
+	}
+
+	private void limparTabela() {
+		tblTelefone.setModel(new DefaultTableModel(new Object[][] { colunasTabelaTelefones, }, colunasTabelaTelefones));
 	}
 
 	protected void limparCampoTelefone() {
@@ -271,7 +299,7 @@ public class TelaDeCadastroClientes extends JFrame {
 		txtDDD.setText("");
 		txtNumero.setText("");
 		cbTipo.setSelectedItem(2);
-			
+
 	}
 
 	private void consultarEnderecos() {
