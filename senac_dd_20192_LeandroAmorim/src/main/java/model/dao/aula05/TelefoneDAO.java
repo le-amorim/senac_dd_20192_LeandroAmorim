@@ -164,6 +164,7 @@ public class TelefoneDAO implements BaseDAO<Telefone> {
 		} finally {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
+
 		}
 
 		return telefones;
@@ -181,11 +182,9 @@ public class TelefoneDAO implements BaseDAO<Telefone> {
 		try {
 			telefone.setId(resultadoDaConsulta.getInt("id"));
 
-			// ClienteDAO cliDAO = new ClienteDAO();
-			// Cliente donoDoTelefone =
-			// cliDAO.consultarPorId(resultadoDaConsulta.getInt("idCliente"));
-
-			// telefone.setDono(donoDoTelefone);
+//			ClienteDAO cliDAO = new ClienteDAO();
+//			Cliente donoDoTelefone = cliDAO.consultarPorId(resultadoDaConsulta.getInt("idCliente"));
+//			telefone.setCliente(donoDoTelefone);
 			telefone.setCodigoPais(resultadoDaConsulta.getString("codigoPais"));
 			telefone.setDdd(resultadoDaConsulta.getString("ddd"));
 			telefone.setNumero(resultadoDaConsulta.getString("numero"));
@@ -240,20 +239,23 @@ public class TelefoneDAO implements BaseDAO<Telefone> {
 	}
 
 	public boolean temTelefoneCadastrado(Telefone novoTelefone) {
+		String sql = "SELECT ID FROM TELEFONE WHERE CODIGOPAIS = " + novoTelefone.getCodigoPais() + " And DDD = "
+				+ novoTelefone.getDdd() + " AND NUMERO = " + novoTelefone.getNumero();
+	
 		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
 		ResultSet rs = null;
-			String sql = "SELECT ID FROM TELEFONE WHERE codigoPais=? AND ddd=? AND numero=?";
-			PreparedStatement prepStmt = Banco.getPreparedStatement(conn, sql);
-			boolean temTelefoneCadastrado = false;
+		boolean temTelefoneCadastrado = false;
 		try {
-			rs = prepStmt.executeQuery();
+			rs = stmt.executeQuery(sql);
 			temTelefoneCadastrado = rs.next();
-			
+
 		} catch (SQLException e) {
 			System.out.println("nao foi possivel verificar telefone Cadastrado");
-			System.out.println("mensagem de erro: "+e);
+			System.out.println("mensagem de erro: " + e);
 		} finally {
-			Banco.closePreparedStatement(prepStmt);
+			Banco.closeResultSet(rs);
+			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
 		}
 

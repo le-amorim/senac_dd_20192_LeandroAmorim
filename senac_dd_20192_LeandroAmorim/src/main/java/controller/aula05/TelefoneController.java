@@ -9,6 +9,7 @@ public class TelefoneController {
 	public static final String TIPO_TELEFONE_MOVEL = "Movel";
 	public static final String TIPO_TELEFONE_FIXO = "Fixo";
 	public static final String SELECIONE_UM_TIPO = "<selecione um tipo>";
+	String mensagem = "";
 
 	private TelefoneBO bo = new TelefoneBO();
 
@@ -21,7 +22,6 @@ public class TelefoneController {
 		return bo.consultarTelefonesDoCliente(idCliente);
 	}
 
-	String mensagem = " ";
 
 	public String validarCamposTelefone(String codigoDigitado, String dddDigitado, String numeroDigitado,
 			String tipoSelecionado) {

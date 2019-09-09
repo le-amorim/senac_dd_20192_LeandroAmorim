@@ -179,6 +179,6 @@ public class ClienteDAO implements BaseDAO<Cliente> {
 			System.out.println("Erro: " + e.getMessage());
 		}
 
-		return cli;
+		return null;
 	}
 }

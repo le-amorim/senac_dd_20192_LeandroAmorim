@@ -239,25 +239,20 @@ public class TelaDeCadastroClientes extends JFrame {
 				if (mensagem.isEmpty()) {
 					Telefone novoTelefone = new Telefone(novoCliente, codigoDigitado, dddDigitado, numeroDigitado,
 							tipoSelecionado, ativo);
-					JOptionPane.showMessageDialog(null, "Telefone adicionado com Sucesso");
 					mensagem = telController.salvarTelefone(novoTelefone);
-
-					if (mensagem.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Telefone Adicionado com Sucesso");
-						limparCampoTelefone();
+					JOptionPane.showMessageDialog(null, "Telefone " + "adicionado", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					btnSalvar.setEnabled(true);
+					atualizarTabelaTelefonesDoCliente();
 					} else {
 						JOptionPane.showMessageDialog(null, mensagem);
 					}
 
-					atualizarTabelaTelefonesDoCliente();
-				}else {
-					JOptionPane.showMessageDialog(null, mensagem);
+					limparCampoTelefone();
 				}
-
-			}
 		});
 		btnAdicionarTelefone.setEnabled(false);
-		btnAdicionarTelefone.setBounds(200, 231, 142, 23);
+		btnAdicionarTelefone.setBounds(193, 231, 142, 23);
 		contentPane.add(btnAdicionarTelefone);
 
 		JLabel lblCadastrarCliente = new JLabel(
